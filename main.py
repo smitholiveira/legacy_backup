@@ -182,7 +182,7 @@ Remember:
     # print(devices.save())
     # print(devices.backup('tftp'))
     # there is an option of removing the domain name once it is specified
-    devices.backup('tftp', '.ucl.ac.uk')
+    devices.backup('tftp')
 
 
 if __name__ == '__main__':
