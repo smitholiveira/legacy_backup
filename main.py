@@ -101,7 +101,7 @@ class Device(Login):
 
         return output
 
-    def backup(self, folder):
+    def backup(self, folder, remove_domain_name=''):
         net_connect = self.login()
 
         var_command = 'sh run'
@@ -113,7 +113,9 @@ class Device(Login):
                 display = net.send_command(var_command, max_loops=1000, delay_factor=5)
                 output.append(display)
 
-                folder_file_name = f'{folder}/{net.host}'
+                remove_domain_name_ucl = net.host.replace(remove_domain_name, '')
+
+                folder_file_name = f'{folder}/{remove_domain_name_ucl}'
 
                 # shuffle
                 shuffle(folder_file_name, 'confg', 'BAK')
@@ -178,7 +180,8 @@ Remember:
     devices = Device(args_cred, args_host, args.device_type)
     # print(devices.save())
     # print(devices.backup('tftp'))
-    devices.backup('tftp')
+    # there is an option of removing the domain name once it is specified
+    devices.backup('tftp', '.ucl.ac.uk')
 
 
 if __name__ == '__main__':
