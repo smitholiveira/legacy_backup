@@ -143,7 +143,7 @@ e.g.
     
 Creating the yaml file:
     
-    vim pass.yml
+    vim hosts.yml (you can give any name, as long as it is a yaml format.)
     
     ---
     host_oliveiras:
@@ -152,13 +152,14 @@ Creating the yaml file:
       - 192.168.56.170
     
 Remember:
-    You don't have to chmod the file or login to the device directly.
+    You don't have to shuffle the file.
+    You don't have to chmod the file.
+    You don't have to login to the device directly.
 '''
 
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
                                      description=arg_desc)
 
-    # parser = argparse.ArgumentParser(description=arg_desc)
     parser.add_argument('-u', '--username', help='Enter username.', type=str, required=True)
     parser.add_argument('-p', '--password', help='Enter password.', type=str, required=True)
     parser.add_argument('-e', '--enable', help='Enter enable password.', type=str, required=True)
