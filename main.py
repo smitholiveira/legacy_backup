@@ -69,8 +69,11 @@ class Login:
                 net_connect.enable()
                 self.output.append(net_connect)
 
-            except exceptions as error:
-                print(error)
+            # except exceptions as error:
+            #     print(error)
+
+            except exceptions:
+                print(f'{hosts}: failed')
 
     def login(self):
         return self.output
@@ -101,6 +104,7 @@ class Device(Login):
         output = []
         for net in net_connect:
             try:
+                net.save_config()
                 display = net.send_command(var_command, max_loops=1000, delay_factor=5)
                 output.append(display)
 
@@ -113,6 +117,8 @@ class Device(Login):
                 for o in output:
                     with open(f'{folder_file_name}-confg', 'w') as f:
                         f.write(o)
+
+                print(f'{net.host}: success')
 
             except exceptions as error:
                 print(error)
@@ -149,7 +155,8 @@ Remember:
     parser.add_argument('-u', '--username', help='Enter username.', type=str, required=True)
     parser.add_argument('-p', '--password', help='Enter password.', type=str, required=True)
     parser.add_argument('-e', '--enable', help='Enter enable password.', type=str, required=True)
-    parser.add_argument('-d', '--device_type', help='Enter device type. e.g. cisco_ios, cisco_nxos, cisco_asa', type=str, required=True)
+    parser.add_argument('-d', '--device_type', help='Enter device type. e.g. cisco_ios, cisco_nxos, cisco_asa',
+                        type=str, required=True)
     parser.add_argument('-f', '--file', help='Enter file name (yaml).', type=str, required=True)
     parser.add_argument('-g', '--group', help='Enter group name.', type=str, required=True)
 
@@ -164,8 +171,9 @@ Remember:
     args_host = func_yml(args.file, args.group)
 
     devices = Device(args_cred, args_host, args.device_type)
-    print(devices.save())
-    print(devices.backup('tftp'))
+    # print(devices.save())
+    # print(devices.backup('tftp'))
+    devices.backup('tftp')
 
 
 if __name__ == '__main__':
