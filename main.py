@@ -5,6 +5,7 @@ from netmiko import ConnectHandler, NetMikoAuthenticationException, NetMikoTimeo
 from os import rename
 from os.path import isfile
 import argparse
+from socket import getfqdn
 
 exceptions = (
     NetMikoAuthenticationException,
@@ -51,9 +52,13 @@ def func_yml(file_path_yaml, group):
 class Login:
     def __init__(self, var_credentials: dict, var_hosts, var_device_type):
 
+        # remove the duplication and get fqdn
+        remove_duplicate_hosts = [getfqdn(x) for x in set(var_hosts)]
+        remove_duplicate_hosts = set(remove_duplicate_hosts)
+
         self.output = []
 
-        for hosts in var_hosts:
+        for hosts in remove_duplicate_hosts:
             device = {
                 'device_type': var_device_type,
                 'host': hosts,
