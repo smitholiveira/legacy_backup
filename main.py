@@ -186,55 +186,6 @@ class Device(Login):
 
 
 def main():
-#     arg_desc = '''
-# This program backups Cisco IOS, NXOS and ASA using the old method (shuffling).
-#
-# e.g.
-#     source /venv/bin/python/activate
-#     python main.py -u smith -p cisco1 -e cisco1 -d cisco_ios -f pass.yml -g host_oliveiras
-#
-# Creating the yaml file:
-#
-#     vim hosts.yml (you can give any name, as long as it is a yaml format.)
-#
-#     ---
-#     host_oliveiras:
-#       - 192.168.56.150
-#       - 192.168.56.160
-#       - 192.168.56.170
-#
-# Remember:
-#     You don't have to shuffle the file.
-#     You don't have to chmod the file.
-#     You don't have to login to the device directly.
-# '''
-#
-#     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
-#                                      description=arg_desc)
-#
-#     parser.add_argument('-u', '--username', help='Enter username.', type=str, required=True)
-#     parser.add_argument('-p', '--password', help='Enter password.', type=str, required=True)
-#     parser.add_argument('-e', '--enable', help='Enter enable password.', type=str, required=True)
-#     parser.add_argument('-d', '--device_type', help='Enter device type. e.g. cisco_ios, cisco_nxos, cisco_asa',
-#                         type=str, required=True)
-#     parser.add_argument('-f', '--file', help='Enter file name (yaml).', type=str, required=True)
-#     parser.add_argument('-g', '--group', help='Enter group name.', type=str, required=True)
-#
-#     args = parser.parse_args()
-#
-#     args_cred = {
-#         'username': args.username,
-#         'password': args.password,
-#         'secret': args.enable
-#     }
-#
-#     args_host = func_yml(args.file, args.group)
-#
-#     devices = Device(args_cred, args_host, args.device_type)
-#     # print(devices.save())
-#     # print(devices.backup('tftp'))
-#     # there is an option of removing the domain name once it is specified
-#     devices.backup('tftp', '.ucl.ac.uk')
     func_args('tftp', '.ucl.ac.uk')
 
 
