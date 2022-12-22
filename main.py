@@ -51,7 +51,7 @@ def func_yml(file_path_yaml, group):
 
 def func_args(folder, remove_domain_name=''):
     arg_desc = '''
-    This program backups Cisco IOS, NXOS and ASA using the old method (shuffling). 
+    This program backups Cisco IOS, NXOS and ASA using. 
 
     e.g.
         source /venv/bin/python/activate
