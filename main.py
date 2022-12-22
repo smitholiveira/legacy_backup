@@ -55,7 +55,7 @@ def func_args(folder, remove_domain_name=''):
 
     e.g.
         source /venv/bin/python/activate
-        python main.py -u smith -p cisco1 -e cisco1 -d cisco_ios -f pass.yml -g host_oliveiras
+        python main.py -u developer -p C1sco12345 -e C1sco12345 -f start_here.yml
 
     Creating the yaml file:
 
@@ -79,10 +79,10 @@ def func_args(folder, remove_domain_name=''):
     parser.add_argument('-u', '--username', help='Enter username.', type=str, required=True)
     parser.add_argument('-p', '--password', help='Enter password.', type=str, required=True)
     parser.add_argument('-e', '--enable', help='Enter enable password.', type=str, required=True)
-    parser.add_argument('-d', '--device_type', help='Enter device type. e.g. cisco_ios, cisco_nxos, cisco_asa',
-                        type=str, required=True)
-    parser.add_argument('-f', '--file', help='Enter file name (yaml).', type=str, required=True)
-    parser.add_argument('-g', '--group', help='Enter group name.', type=str, required=True)
+    # parser.add_argument('-d', '--device_type', help='Enter device type. e.g. cisco_ios, cisco_nxos, cisco_asa',
+    #                     type=str, required=True)
+    parser.add_argument('-f', '--file', help='Enter config file name (yml).', type=str, required=True)
+    # parser.add_argument('-g', '--group', help='Enter group name.', type=str, required=True)
 
     args = parser.parse_args()
 
@@ -92,13 +92,38 @@ def func_args(folder, remove_domain_name=''):
         'secret': args.enable
     }
 
-    args_host = func_yml(args.file, args.group)
+    # args_host = func_yml(args.file, args.group)
+    host = func_yml(args.file, 'host')
+    parameters = func_yml(args.file, 'parameters')
 
-    devices = Device(args_cred, args_host, args.device_type)
-    # print(devices.save())
-    # print(devices.backup('tftp'))
-    # there is an option of removing the domain name once it is specified
-    devices.backup(folder, remove_domain_name)
+    task = Device(args_cred, host, parameters.get('device_type'))
+    task.backup(folder, remove_domain_name)
+
+
+def func_input(folder, remove_domain_name=''):
+    username = input('Enter the username: ')
+    password = input('Enter the password: ')
+    secret = input('Enter the enable password: ')
+    config_file = input('Enter the config file name (yml): ')
+
+    cred = {
+        'username': username,
+        'password': password,
+        'secret': secret
+    }
+    host = func_yml(config_file, 'host')
+    parameters = func_yml(config_file, 'parameters')
+
+    task = Device(cred, host, parameters.get('device_type'))
+    task.backup(parameters.get(folder), remove_domain_name)
+
+
+def func_start_here(folder, remove_domain_name=''):
+    cred = func_yml('start_here.yml', 'cred')
+    host = func_yml('start_here.yml', 'host')
+    parameters = func_yml('start_here.yml', 'parameters')
+    task = Device(cred, host, parameters.get('device_type'))
+    task.backup(parameters.get(folder), remove_domain_name)
 
 
 class Login:
@@ -186,7 +211,14 @@ class Device(Login):
 
 
 def main():
-    func_args('tftp', '.ucl.ac.uk')
+    # Use Command-Line Arguments
+    # func_args('tftp', '.ucl.ac.uk')
+
+    # Use Prompt the User for Input
+    # func_input('folder', '.ucl.ac.uk')
+
+    # Use The start_here.yml File
+    func_start_here('folder', '.ucl.ac.uk')
 
 
 if __name__ == '__main__':

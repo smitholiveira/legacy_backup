@@ -14,16 +14,4 @@ cred_oliveiras:
   password: cisco1
   secret: cisco1
 
-host_iosxe:
-  - sandbox-iosxe-recomm-1.cisco.com
-  - sandbox-iosxe-latest-1.cisco.com
-
-host_nxos:
-  - sandbox-nxos-1.cisco.com
-
-host_oliveiras:
-  - 192.168.56.150
-  - 192.168.56.160
-  - 192.168.56.170
-
 
